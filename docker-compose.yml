@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: etl-api
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    environment:
+      - TZ=America/Guatemala
+    networks:
+      - etlnet
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: etl-web
+    depends_on:
+      - api
+    ports:
+      - "8080:8080"  # Abre http://localhost:8080
+    networks:
+      - etlnet
+
+networks:
+  etlnet:
+    driver: bridge

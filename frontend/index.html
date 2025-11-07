@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>ETL FoxPro → SQL Server</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Herramienta ETL Visual FoxPro → SQL Server</h1>
+
+  <section>
+    <h3>1️⃣ Subir archivo .DBF</h3>
+    <input type="file" id="dbfFile" />
+    <button id="btnUpload">Subir</button>
+  </section>
+
+  <section>
+    <h3>2️⃣ Descubrir esquema</h3>
+    <button id="btnDiscover">Ejecutar Descubrimiento</button>
+  </section>
+
+  <section>
+    <h3>3️⃣ Descargar DDL SQL</h3>
+    <button id="btnDownload">Descargar schema.sql</button>
+  </section>
+
+  <section>
+    <h3>4️⃣ Ejecutar ETL</h3>
+    <button id="btnETL">Ejecutar ETL</button>
+  </section>
+
+  <pre id="output"></pre>
+
+<script src="script.js"></script>
+</body>
+</html>

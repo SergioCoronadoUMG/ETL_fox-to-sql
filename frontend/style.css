@@ -1,0 +1,5 @@
+body { font-family: system-ui, Arial, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 12px; }
+h1 { margin-bottom: 16px; }
+section { padding: 12px 0; border-bottom: 1px solid #eee; margin-bottom: 12px; }
+button { padding: 8px 12px; cursor: pointer; }
+pre { background: #111; color: #0f0; padding: 12px; border-radius: 6px; white-space: pre-wrap; }

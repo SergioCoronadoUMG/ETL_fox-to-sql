@@ -1,0 +1,58 @@
+# Ruta con los .DBF (y .FPT si hay memo)
+source_dir: "C:/migracion/foxpro/dbf"
+file_pattern: "*.dbf"
+# Si conoces el codepage (p. ej. 1252), colócalo; si no, se intenta detectar
+encoding: "auto"   # valores: auto | 1252 | 850 | utf-8, etc.
+
+# Conexión SQL Server (ODBC Driver 17/18)
+sqlserver:
+  driver: "ODBC Driver 18 for SQL Server"
+  server: "localhost,1433"
+  database: "FoxProMigrado"
+  user: "sa"
+  password: "TuPassword!"
+  trust_server_certificate: true
+
+# Reglas generales
+batch_size: 5000
+schema: "dbo"
+create_tables: true
+truncate_before_load: false       # Si true, TRUNCATE TABLE antes de cargar
+
+# Descubrimiento de PK/FK
+discovery:
+  sample_rows: 20000
+  pk_uniqueness_threshold: 1.0
+  fk_match_threshold: 0.95
+  max_pk_combo: 2
+  
+# Mapeo específico por tabla (opcional)
+table_overrides:
+  CLIENTES:
+    table_name: "Clientes"
+    primary_keys: ["ID"]
+    column_renames:
+      NOMBRE: Nombre
+      DIRECC: Direccion
+    column_overrides:           # fuerzas de tipo SQL
+      OBSERV: NVARCHAR(MAX)
+
+# Columnas a normalizar (reglas simples)
+transform_rules:
+  trim_strings: true
+  empty_string_as_null: true
+  boolean_true_values: ["T", "Y", "1", 1, true]
+  boolean_false_values: ["F", "N", "0", 0, false, ""]
+
+# Validaciones
+validate:
+  row_counts: true
+  not_null_columns:
+    CLIENTES: ["ID", "NOMBRE"]
+
+# --- Opciones para descubrimiento de esquema (PK/FK) ---
+discovery:
+  sample_rows: 20000        # máximo de filas a muestrear por tabla para inferencia de tipos
+  pk_uniqueness_threshold: 1.0   # 1.0 => todos únicos; 0.999 acepta 0.1% duplicados (p.ej. datos sucios)
+  fk_match_threshold: 0.95       # 95% de coincidencia para considerar FK
+  max_pk_combo: 2                # evaluar combinaciones de hasta 2 columnas para PK compuesta
